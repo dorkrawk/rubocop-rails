@@ -77,14 +77,12 @@ RSpec.describe RuboCop::Cop::Rails::TransactionExitStatement, :config do
   end
 
   it 'does not register an offense when `return` is used in `rescue`' do
-    puts "in failing test *****************************************************************"
     expect_no_offenses(<<~RUBY)
       ApplicationRecord.transaction do
       rescue
         return do_something
       end
     RUBY
-    puts "**************************************************************"
   end
 
   it 'registers an officense when  `return` is used outside of a `rescue`' do
