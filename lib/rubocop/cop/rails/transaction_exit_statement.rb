@@ -79,8 +79,16 @@ module RuboCop
           end
         end
 
+        def_node_matcher :rescue_body_return_node?, <<~PATTERN
+          (:resbody ...
+            ...
+            (:return ...)
+            ...
+          )
+        PATTERN
+
         def in_rescue?(statement_node)
-          statement_node.ancestors.find(&:rescue_type?)
+          statement_node.ancestors.any? { |n| rescue_body_return_node?(n) }
         end
 
         def nested_block?(statement_node)
